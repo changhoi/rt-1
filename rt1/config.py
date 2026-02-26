@@ -8,15 +8,15 @@ class RT1Config:
     num_images: int = 6  # history length (6 frames)
 
     # === Language ===
-    lang_model: str = "all-MiniLM-L6-v2"  # sentence-transformers 모델
-    lang_raw_dim: int = 384  # all-MiniLM-L6-v2 출력 차원
-    lang_embed_dim: int = 512  # projection 후 차원 (원본 USE와 동일)
+    lang_model: str = "all-MiniLM-L6-v2"  # sentence-transformers model
+    lang_raw_dim: int = 384  # all-MiniLM-L6-v2 output dim
+    lang_embed_dim: int = 512  # post-projection dim (matches original USE)
     freeze_lang_encoder: bool = True
 
     # === FiLM EfficientNet ===
     efficientnet_model: str = "efficientnet_b3"
     use_pretrained: bool = True
-    num_film_layers: int = 26  # EfficientNet-B3의 MBConv 블록 수
+    num_film_layers: int = 26  # number of MBConv blocks in EfficientNet-B3
 
     # === TokenLearner ===
     num_learned_tokens: int = 8  # 81 tokens -> 8 tokens
@@ -26,14 +26,14 @@ class RT1Config:
     token_dim: int = 512
     num_layers: int = 8  # self-attention layers
     num_heads: int = 8
-    d_ff: int = 1024  # feedforward 차원
+    d_ff: int = 1024  # feedforward dimension
     dropout: float = 0.1
 
     # === Action ===
-    num_action_bins: int = 256  # 각 차원을 256개 bin으로 이산화
+    num_action_bins: int = 256  # discretize each dimension into 256 bins
     action_dims: int = 11  # arm(7) + base(3) + mode(1)
 
     @property
     def max_seq_len(self) -> int:
-        """Transformer 입력 시퀀스 길이: num_images * num_learned_tokens."""
+        """Transformer input sequence length: num_images * num_learned_tokens."""
         return self.num_images * self.num_learned_tokens  # 6 * 8 = 48
